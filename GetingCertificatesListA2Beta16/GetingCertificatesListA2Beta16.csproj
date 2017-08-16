@@ -48,8 +48,8 @@
     <Content Include="Scripts\angular2\es6-shim.map" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AppA2\Tests\default.html" />
-    <Content Include="Default.html" />
+    <Content Include="a2\Tests\default.html" />
+    <Content Include="app.html" />
     <Content Include="Scripts\angular2\angular2-polyfills.js" />
     <Content Include="Scripts\angular2\angular2.js" />
     <Content Include="Scripts\angular2\async-crypto.es6.js" />
@@ -71,11 +71,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="AppA2\Tests\aboot.ts" />
-    <TypeScriptCompile Include="AppA2\Tests\default.ts" />
-    <TypeScriptCompile Include="AppA2\_Shared\Plugins\cryptopro.ts" />
-    <TypeScriptCompile Include="AppA2\_Shared\Services\certs.service.ts" />
-    <TypeScriptCompile Include="AppA2\_Shared\Services\diadoc.service.ts" />
+    <TypeScriptCompile Include="a2\Tests\aboot.ts" />
+    <TypeScriptCompile Include="a2\Tests\default.ts" />
+    <TypeScriptCompile Include="a2\_Shared\Plugins\cryptopro.ts" />
+    <TypeScriptCompile Include="a2\_Shared\Services\certs.service.ts" />
+    <TypeScriptCompile Include="a2\_Shared\Services\diadoc.service.ts" />
     <TypeScriptCompile Include="Scripts\angular2\event_emitter.ts" />
   </ItemGroup>
   <ItemGroup>
