@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+
+    <script>document.write('<base href="/" />');</script>
+
+    <script src="/Scripts/angular2/shims_for_IE.js"></script>
+    <script src="/Scripts/angular2/es6-shim.min.js"></script>
+    <script src="/Scripts/angular2/system-polyfills.js"></script>
+    <script src="/Scripts/angular2/angular2-polyfills.js"></script>
+    <script src="/Scripts/angular2/system.js"></script>
+    <script src="/Scripts/angular2/typescript.js"></script>
+    <script src="/Scripts/angular2/Rx.js"></script>
+    <script src="/Scripts/angular2/angular2.js"></script>
+    <script src="/Scripts/angular2/http.js"></script>
+    <script src="/Scripts/angular2/router.js"></script>
+
+    <script src="/Scripts/angular2/es6-promise.js"></script>
+    <script src="/Scripts/angular2/cadesplugin-api.js"></script>
+    <script src="/Scripts/angular2/base64.js"></script>
+
+    <script>
+      System.config({
+      	transpiler: 'typescript',
+      	typescriptOptions: {
+      		module: 'system',
+      		emitDecoratorMetadata: true,
+      		experimentalDecorators: true
+      	},
+      	map: {
+      		appl: '/a2/Tests',
+      		shared: '/a2/_Shared'
+      	},
+      	packages: {
+
+      		'appl': {
+      			defaultExtension: 'ts'
+      		},
+
+      		'shared': {
+      			defaultExtension: 'ts'
+      		}
+      	}
+
+      });
+    </script>
+
+    <script>
+    	System.import('appl/aboot').then(null, console.error.bind(console));
+    </script>
+</head>
+<body>
+    <my-app>Загружается....</my-app>
+</body>
+</html>
