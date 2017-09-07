@@ -1,10 +1,15 @@
-var CADESCOM_CADES_X_LONG_TYPE_1 = 0x5d; 
-var CADESCOM_CADES_BES = 1;
 var CAPICOM_CURRENT_USER_STORE = 2;
 var CAPICOM_MY_STORE = "My";
+var CAPICOM_STORE_OPEN_READ_ONLY = 0;
+var CAPICOM_STORE_OPEN_READ_WRITE = 1;
 var CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED = 2;
 var CAPICOM_CERTIFICATE_FIND_SUBJECT_NAME = 1;
+var CAPICOM_CERTIFICATE_FIND_SHA1_HASH = 0;
+var CAPICOM_CERTIFICATE_INCLUDE_WHOLE_CHAIN = 1;
+var CADESCOM_CADES_X_LONG_TYPE_1 = 0x5d; 
+var CADESCOM_CADES_BES = 0x01;
 var CADESCOM_ENCODE_BASE64 = 0;
+var CADESCOM_BASE64_TO_BINARY = 1;
 
 function GetErrorMessage(e) {
     let err = e.message;
@@ -16,36 +21,51 @@ function GetErrorMessage(e) {
     return err;
 }
 
-function SignCreate(certSubjectName, dataToSign) {
+function SignCreate(thumbprint, dataToSign) {
     return new Promise(function(resolve, reject){
         cadesplugin.async_spawn(function *(args) {
             try {    
                 let oStore = yield cadesplugin.CreateObjectAsync("CAPICOM.Store");
                 yield oStore.Open(CAPICOM_CURRENT_USER_STORE, CAPICOM_MY_STORE,CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
-
+                
                 let CertificatesObj = yield oStore.Certificates;
-                let oCertificates = yield CertificatesObj.Find(
-                    CAPICOM_CERTIFICATE_FIND_SUBJECT_NAME, certSubjectName);
+                let oCertificates = yield CertificatesObj.Find(CAPICOM_CERTIFICATE_FIND_SHA1_HASH, thumbprint);
                 
                 let Count = yield oCertificates.Count;
                 let oCertificate = yield oCertificates.Item(1);
                 let oSigner = yield cadesplugin.CreateObjectAsync("CAdESCOM.CPSigner");
                 yield oSigner.propset_Certificate(oCertificate);
+                yield oSigner.propset_Options(CAPICOM_CERTIFICATE_INCLUDE_WHOLE_CHAIN);
+                /*
+                
+                -если тестовый личный сертификат выпускали здесь https://www.cryptopro.ru/ui/
+                то используйте стенд http://www.cryptopro.ru/tsp/tsp.srf
+
+                -если тестовый личный сертификат выпускали здесь https://www.cryptopro.ru/certsrv/
+                используйте стенд http://testca.cryptopro.ru/tsp/tsp.srf
+                
+                */
+                let tspService = "http://testca.cryptopro.ru/tsp/tsp.srf";
+                yield oSigner.propset_TSAAddress(tspService);
 
                 let oSignedData = yield cadesplugin.CreateObjectAsync("CAdESCOM.CadesSignedData");
-                let tspService =  "http://testca.cryptopro.ru/tsp/";
-                
+                yield oSignedData.propset_ContentEncoding(CADESCOM_ENCODE_BASE64);
                 yield oSignedData.propset_Content(dataToSign);
-                yield oSigner.propset_TSAAddress(tspService);
-                let sSignedMessage = yield oSignedData.SignCades(oSigner, CADESCOM_CADES_X_LONG_TYPE_1);
+
+                let sSignedMessage = yield oSignedData.SignCades(oSigner, CADESCOM_CADES_X_LONG_TYPE_1, true);
+                
+                yield oSignedData.VerifyCades(sSignedMessage, CADESCOM_CADES_X_LONG_TYPE_1, true);
 
                 yield oStore.Close();
                 args[2](sSignedMessage);
+                return true;
+
                 resolve(true);
+
             } catch (err) {
                 reject(err);
             }
-        }, certSubjectName, dataToSign, resolve, reject);
+        }, thumbprint, dataToSign, resolve, reject);
     });
 }
 
@@ -98,8 +118,9 @@ function FillCertList_NPAPI() {
    return new Promise(function(resolve, reject){
        cadesplugin.async_spawn(function *(args) {
            try {
-                    let oStore = yield cadesplugin.CreateObjectAsync("CAPICOM.Store");
-                    yield oStore.Open(CAPICOM_CURRENT_USER_STORE, CAPICOM_MY_STORE,CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
+               let oStore = yield cadesplugin.CreateObjectAsync("CAPICOM.Store");
+
+                    yield oStore.Open(CAPICOM_CURRENT_USER_STORE, CAPICOM_MY_STORE, CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
                     let CertificatesObj = yield oStore.Certificates;
                     let Count = yield CertificatesObj.Count;
 
@@ -159,6 +180,7 @@ function FillCertList_NPAPI() {
                                 'algorithm' : fAlgoName,
                                 'provname' : sProviderName,
                                 'thumbprint' : yield cert.Thumbprint,
+                                'privateKey' : yield cert.PrivateKey,
                                 'signature' : certBinary
                             });
                             count++;

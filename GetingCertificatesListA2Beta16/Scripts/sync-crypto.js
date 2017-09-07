@@ -1,9 +1,16 @@
-var CADESCOM_CADES_X_LONG_TYPE_1 = 0x5d;
 var CAPICOM_CURRENT_USER_STORE = 2;
 var CAPICOM_MY_STORE = "My";
+var CAPICOM_STORE_OPEN_READ_ONLY = 0;
+var CAPICOM_STORE_OPEN_READ_WRITE = 1;
 var CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED = 2;
 var CAPICOM_CERTIFICATE_FIND_SUBJECT_NAME = 1;
+var CAPICOM_CERTIFICATE_FIND_SHA1_HASH = 0;
+var CAPICOM_CERTIFICATE_INCLUDE_WHOLE_CHAIN = 1;
+var CADESCOM_CADES_X_LONG_TYPE_1 = 0x5d; 
+var CADESCOM_CADES_BES = 0x01;
 var CADESCOM_ENCODE_BASE64 = 0;
+var CADESCOM_BASE64_TO_BINARY = 1;
+
 
 function GetErrorMessage(e) {
     let err = e.message;
@@ -15,7 +22,7 @@ function GetErrorMessage(e) {
     return err;
 }
 
-function SignCreate(certSubjectName, dataToSign) {
+function SignCreate(thumbprint, dataToSign) {
 
     let oCertificate;
     let oSigner;
@@ -25,26 +32,32 @@ function SignCreate(certSubjectName, dataToSign) {
     let oStore = cadesplugin.CreateObject("CAPICOM.Store");
     oStore.Open(CAPICOM_CURRENT_USER_STORE, CAPICOM_MY_STORE, CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED);
 
-    let oCertificates = oStore.Certificates.Find(CAPICOM_CERTIFICATE_FIND_SUBJECT_NAME, certSubjectName);
+    let oCertificates = oStore.Certificates.Find(CAPICOM_CERTIFICATE_FIND_SHA1_HASH, thumbprint);
+
+    if (oCertificates.Count == 0) {
+        return "Certificate not found: " + thumbprint;
+    }
+
+    oCertificate = oCertificates.Item(1);
+    oSigner = cadesplugin.CreateObject("CAdESCOM.CPSigner");
+    oSigner.Certificate = oCertificate;
+    oSigner.TSAAddress = "http://testca.cryptopro.ru/tsp/tsp.srf";
+
+    oSignedData = cadesplugin.CreateObject("CAdESCOM.CadesSignedData");
+    oSignedData.ContentEncoding = CADESCOM_BASE64_TO_BINARY;
+    oSignedData.Content = dataToSign;
 
     try {
-
-        if (oCertificates.Count == 0) {
-            return "Certificate not found: " + certSubjectName;
-        }
-
-        oCertificate = oCertificates.Item(1);
-        oSigner = cadesplugin.CreateObject("CAdESCOM.CPSigner");
-        oSigner.Certificate = oCertificate;
-        oSigner.TSAAddress = "http://testca.cryptopro.ru/tsp/";
-
-        oSignedData = cadesplugin.CreateObject("CAdESCOM.CadesSignedData");
-        oSignedData.Content = dataToSign;
-
         sSignedMessage = oSignedData.SignCades(oSigner, CADESCOM_CADES_X_LONG_TYPE_1);
-
     } catch (err) {
         return "Failed to create signature. Error: " + GetErrorMessage(err);
+    }
+
+    try {
+        oSignedData.VerifyCades(sSignedMessage, CADESCOM_CADES_X_LONG_TYPE_1);
+    } catch (err) {
+        alert("Failed to verify signature. Error: " + cadesplugin.getLastError(err));
+        return false;
     }
 
     oStore.Close();
@@ -63,6 +76,7 @@ function FillCertList_NPAPI() {
 
     try {
         oStore = cadesplugin.CreateObject("CAdESCOM.Store");
+        //https://msdn.microsoft.com/ru-ru/library/windows/desktop/aa388130(v=vs.85).aspx
         oStore.Open();
     } catch (ex) {
         return "Ошибка при открытии хранилища: " + GetErrorMessage(ex);
@@ -105,17 +119,18 @@ function FillCertList_NPAPI() {
                 //oSigner.Certificate = cert;
 
                 let certBinary = cert.Export(CADESCOM_ENCODE_BASE64);
-
+               
                 certList.push({
                     'value': text.replace(/^cn=([^;]+);.+/i, '$1'),
-                    'text': text.replace("CN=", "") + " " + issuedBy,
+                    'text': text.replace("CN=", ""),
                     'subject': certObj.GetCertName(),
                     'issuer': certObj.GetIssuer(),
                     'from': certObj.GetCertFromDate(),
                     'till': certObj.GetCertTillDate(),
                     'algorithm': certObj.GetPubKeyAlgorithm(),
                     'provname': certObj.GetPrivateKeyProviderName(),
-                    'thumbprint': cert.Thumbprint,
+                    'thumbprint': cert.Thumbprint.split(" ").reverse().join("").replace(/\s/g, "").toUpperCase(),
+                    'privateKey': cert.PrivateKey,
                     'signature': certBinary
                 });
 
@@ -123,7 +138,7 @@ function FillCertList_NPAPI() {
 
             } else { continue; }
         } catch (ex) {
-            return "Ошибка при получении свойства SubjectName: " + GetErrorMessage(ex);
+            return "Ошибка при получении параметров установленных сертификатов: " + GetErrorMessage(ex);
         }
     }
 
@@ -159,7 +174,7 @@ CertificateObj.prototype.DateTimePutTogether = function (certDate) {
 }
 
 CertificateObj.prototype.GetCertString = function () {
-    return this.extract(this.cert.SubjectName, 'CN=') + "; Выдан: " + this.GetCertFromDate();
+    return this.extract(this.cert.SubjectName, 'CN=') + "; Выдан: " + this.GetCertFromDate() + "; Действителен до: " + this.GetCertTillDate() + " " + this.GetIssuer();
 }
 
 CertificateObj.prototype.GetCertFromDate = function () {

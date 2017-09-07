@@ -54,7 +54,7 @@ export class CryptoProPlugin {
 
     }
 
-    private isChromiumBased() {
+    public isChromiumBased() {
         let retVal_chrome = navigator.userAgent.match(/chrome/i);
         let retVal_chromeframe = navigator.userAgent.match(/chromeframe/i);
         let isOpera = navigator.userAgent.match(/opr/i);
@@ -124,6 +124,7 @@ export class CryptoProPlugin {
                         reject(error);
                     }
                 }
+
             }
         };
 

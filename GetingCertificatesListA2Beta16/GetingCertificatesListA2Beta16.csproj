@@ -48,13 +48,13 @@
     <Content Include="Scripts\angular2\es6-shim.map" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="a2\Tests\default.html" />
+    <Content Include="Views\Tests\default.html" />
     <Content Include="app.html" />
     <Content Include="Scripts\angular2\angular2-polyfills.js" />
     <Content Include="Scripts\angular2\angular2.js" />
-    <Content Include="Scripts\angular2\async-crypto.es6.js" />
-    <Content Include="Scripts\angular2\base64.js" />
-    <Content Include="Scripts\angular2\cadesplugin-api.js" />
+    <Content Include="Scripts\async-crypto.es6.js" />
+    <Content Include="Scripts\base64.js" />
+    <Content Include="Scripts\cadesplugin-api.js" />
     <Content Include="Scripts\angular2\common.js" />
     <Content Include="Scripts\angular2\es6-promise.js" />
     <Content Include="Scripts\angular2\es6-shim.min.js" />
@@ -62,7 +62,7 @@
     <Content Include="Scripts\angular2\router.js" />
     <Content Include="Scripts\angular2\Rx.js" />
     <Content Include="Scripts\angular2\shims_for_IE.js" />
-    <Content Include="Scripts\angular2\sync-crypto.js" />
+    <Content Include="Scripts\sync-crypto.js" />
     <Content Include="Scripts\angular2\system-polyfills.js" />
     <Content Include="Scripts\angular2\system.js" />
     <Content Include="Scripts\angular2\typescript.js" />
@@ -71,11 +71,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="a2\Tests\aboot.ts" />
-    <TypeScriptCompile Include="a2\Tests\default.ts" />
-    <TypeScriptCompile Include="a2\_Shared\Plugins\cryptopro.ts" />
-    <TypeScriptCompile Include="a2\_Shared\Services\certs.service.ts" />
-    <TypeScriptCompile Include="a2\_Shared\Services\diadoc.service.ts" />
+    <TypeScriptCompile Include="Views\Tests\aboot.ts" />
+    <TypeScriptCompile Include="Views\Tests\default.ts" />
+    <TypeScriptCompile Include="Plugins\cryptopro.ts" />
+    <TypeScriptCompile Include="Services\certs.service.ts" />
+    <TypeScriptCompile Include="Services\diadoc.service.ts" />
     <TypeScriptCompile Include="Scripts\angular2\event_emitter.ts" />
   </ItemGroup>
   <ItemGroup>
