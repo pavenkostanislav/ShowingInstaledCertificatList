@@ -71,6 +71,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Services\fileupload.service.ts" />
     <TypeScriptCompile Include="Views\Tests\aboot.ts" />
     <TypeScriptCompile Include="Views\Tests\default.ts" />
     <TypeScriptCompile Include="Plugins\cryptopro.ts" />
