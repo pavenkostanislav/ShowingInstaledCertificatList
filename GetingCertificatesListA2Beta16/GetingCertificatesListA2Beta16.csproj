@@ -48,13 +48,13 @@
     <Content Include="Scripts\angular2\es6-shim.map" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\cadesplugin_api.js" />
     <Content Include="Views\Tests\default.html" />
     <Content Include="app.html" />
     <Content Include="Scripts\angular2\angular2-polyfills.js" />
     <Content Include="Scripts\angular2\angular2.js" />
     <Content Include="Scripts\async-crypto.es6.js" />
     <Content Include="Scripts\base64.js" />
-    <Content Include="Scripts\cadesplugin-api.js" />
     <Content Include="Scripts\angular2\common.js" />
     <Content Include="Scripts\angular2\es6-promise.js" />
     <Content Include="Scripts\angular2\es6-shim.min.js" />

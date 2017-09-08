@@ -1,15 +1,23 @@
 var CAPICOM_CURRENT_USER_STORE = 2;
+
 var CAPICOM_MY_STORE = "My";
+
 var CAPICOM_STORE_OPEN_READ_ONLY = 0;
 var CAPICOM_STORE_OPEN_READ_WRITE = 1;
 var CAPICOM_STORE_OPEN_MAXIMUM_ALLOWED = 2;
+
 var CAPICOM_CERTIFICATE_FIND_SUBJECT_NAME = 1;
 var CAPICOM_CERTIFICATE_FIND_SHA1_HASH = 0;
 var CAPICOM_CERTIFICATE_INCLUDE_WHOLE_CHAIN = 1;
-var CADESCOM_CADES_X_LONG_TYPE_1 = 0x5d; 
-var CADESCOM_CADES_BES = 0x01;
+
+var CADESCOM_CADES_X_LONG_TYPE_1 = 5;
+var CADESCOM_CADES_BES = 1;
+
 var CADESCOM_ENCODE_BASE64 = 0;
-var CADESCOM_BASE64_TO_BINARY = 1;
+
+//Задание кодировки подписываемых данных
+var CADESCOM_STRING_TO_UCS2LE = 0; //Данные будут перекодированы в UCS-2 little endian.
+var CADESCOM_BASE64_TO_BINARY = 1; //Данные будут перекодированы из Base64 в бинарный массив.
 
 
 function GetErrorMessage(e) {
@@ -41,6 +49,10 @@ function SignCreate(thumbprint, dataToSign) {
     oCertificate = oCertificates.Item(1);
     oSigner = cadesplugin.CreateObject("CAdESCOM.CPSigner");
     oSigner.Certificate = oCertificate;
+    /*
+    *если тестовый личный сертификат выпускали здесь https://www.cryptopro.ru/ui/ то используйте стенд http://www.cryptopro.ru/tsp/tsp.srf
+    *если тестовый личный сертификат выпускали здесь https://www.cryptopro.ru/certsrv/ используйте стенд http://testca.cryptopro.ru/tsp/tsp.srf
+    */
     oSigner.TSAAddress = "http://testca.cryptopro.ru/tsp/tsp.srf";
 
     oSignedData = cadesplugin.CreateObject("CAdESCOM.CadesSignedData");
@@ -48,13 +60,13 @@ function SignCreate(thumbprint, dataToSign) {
     oSignedData.Content = dataToSign;
 
     try {
-        sSignedMessage = oSignedData.SignCades(oSigner, CADESCOM_CADES_X_LONG_TYPE_1);
+        sSignedMessage = oSignedData.SignCades(oSigner, CADESCOM_CADES_X_LONG_TYPE_1, true);
     } catch (err) {
         return "Failed to create signature. Error: " + GetErrorMessage(err);
     }
 
     try {
-        oSignedData.VerifyCades(sSignedMessage, CADESCOM_CADES_X_LONG_TYPE_1);
+        oSignedData.VerifyCades(sSignedMessage, CADESCOM_CADES_X_LONG_TYPE_1, true);
     } catch (err) {
         alert("Failed to verify signature. Error: " + cadesplugin.getLastError(err));
         return false;
@@ -121,17 +133,17 @@ function FillCertList_NPAPI() {
                 let certBinary = cert.Export(CADESCOM_ENCODE_BASE64);
                
                 certList.push({
-                    'value': text.replace(/^cn=([^;]+);.+/i, '$1'),
-                    'text': text.replace("CN=", ""),
-                    'subject': certObj.GetCertName(),
-                    'issuer': certObj.GetIssuer(),
-                    'from': certObj.GetCertFromDate(),
-                    'till': certObj.GetCertTillDate(),
-                    'algorithm': certObj.GetPubKeyAlgorithm(),
-                    'provname': certObj.GetPrivateKeyProviderName(),
-                    'thumbprint': cert.Thumbprint.split(" ").reverse().join("").replace(/\s/g, "").toUpperCase(),
-                    'privateKey': cert.PrivateKey,
-                    'signature': certBinary
+                    //'value': text.replace(/^cn=([^;]+);.+/i, '$1'),
+                    //'subject': certObj.GetCertName(),
+                    //'issuer': certObj.GetIssuer(),
+                    //'from': certObj.GetCertFromDate(),
+                    //'till': certObj.GetCertTillDate(),
+                    //'algorithm': certObj.GetPubKeyAlgorithm(),
+                    //'provname': certObj.GetPrivateKeyProviderName(),
+                    //'privateKey': cert.PrivateKey,
+                    //'signature': certBinary,
+                    'text': text,
+                    'thumbprint': cert.Thumbprint.split(" ").reverse().join("").replace(/\s/g, "").toUpperCase()
                 });
 
                 count++;
@@ -174,7 +186,7 @@ CertificateObj.prototype.DateTimePutTogether = function (certDate) {
 }
 
 CertificateObj.prototype.GetCertString = function () {
-    return this.extract(this.cert.SubjectName, 'CN=') + "; Выдан: " + this.GetCertFromDate() + "; Действителен до: " + this.GetCertTillDate() + " " + this.GetIssuer();
+    return  "Кому выдан: " + this.extract(this.cert.SubjectName, 'CN=').replace("CN=", "") + "; Кем выдан: " + this.GetIssuer() + "; Действителен c " + this.GetCertFromDate() + " по " + this.GetCertTillDate();
 }
 
 CertificateObj.prototype.GetCertFromDate = function () {

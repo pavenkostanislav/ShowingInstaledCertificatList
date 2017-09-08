@@ -2,9 +2,24 @@
 import { Observable } from 'rxjs/Rx';
 import { CryptoProPlugin } from "shared/Plugins/cryptopro";
 import 'Scripts/angular2/base64.js';
+/*
+    let body: any = Base64.decode(signature);
+
+    Base64.decode('ZGFua29nYWk=');  // dankogai
+        Base64.decode('5bCP6aO85by+');  // 小飼弾
+        Base64.decode('5bCP6aO85by-');  // 小飼弾
+
+        Base64.encode('dankogai');  // ZGFua29nYWk=
+        Base64.encode('小飼弾');    // 5bCP6aO85by+
+        Base64.encodeURI('小飼弾'); // 5bCP6aO85by-
+
+    let encodeString: string = Base64.encode(file);
+    */
 
 import { DiadocService } from "shared/Services/diadoc.service";
 import { FileModel } from "shared/Services/fileupload.service";
+
+
 
 @Injectable()
 export class CertsService {
@@ -48,22 +63,6 @@ export class CertsService {
 
 
     public signCreated(certThumbprint: string, file: FileModel): void {
-
-    /*
-        let body: any = Base64.decode(signature);
-
-        Base64.decode('ZGFua29nYWk=');  // dankogai
-            Base64.decode('5bCP6aO85by+');  // 小飼弾
-            Base64.decode('5bCP6aO85by-');  // 小飼弾
-
-            Base64.encode('dankogai');  // ZGFua29nYWk=
-            Base64.encode('小飼弾');    // 5bCP6aO85by+
-            Base64.encodeURI('小飼弾'); // 5bCP6aO85by-
-
-        let encodeString: string = Base64.encode(file);
-     */
-
-
         this.crypto.then(
             () => {
                 this.crypto.signature(certThumbprint, file.file)
@@ -71,42 +70,7 @@ export class CertsService {
                     (res: any) => {
                         this.PDFBase64String = res;
                         console.log(this.PDFBase64String);
-
-                        let b64Data = this.PDFBase64String;
-                        if (b64Data) {
-                            let contentType = 'application/pkcs7-signature';
-
-//let byteCharacters: string;
-//if (this.crypto.isChromium) {
-//    byteCharacters = window.atob(b64Data);
-//} else {
-//    byteCharacters = Base64.decode(b64Data);
-//}
-
-                            let byteNumbers = new Array(b64Data.length);
-
-                            for (var i = 0; i < b64Data.length; i++)
-                                byteNumbers[i] = b64Data.charCodeAt(i);
-
-                            let byteArray = new Uint8Array(byteNumbers);
-
-                            let blob = new Blob([byteArray], { type: contentType });
-
-                            console.log(blob.size);
-
-                            let url = window.URL.createObjectURL(blob);
-
-                            if (window.navigator.msSaveBlob) {
-                                window.navigator.msSaveOrOpenBlob(blob, file.description + ".p7s");
-                            } else {
-                                var link = document.createElement('a');
-                                link.href = window.URL.createObjectURL(blob);
-                                link.setAttribute('download', file.description + ".p7s");
-                                document.body.appendChild(link);
-                                link.click();
-                                document.body.removeChild(link);
-                            }
-                        }
+                        this.createFileResponce(this.PDFBase64String, file.description);
                     }
                     , (error) => {
                         console.error(error);
@@ -115,6 +79,36 @@ export class CertsService {
             , (error) => {
                 console.error(error);
             });
+    }
+
+    private createFileResponce(b64Data: string, fileName: string) {
+        if (b64Data) {
+            let contentType = 'application/pkcs7-signature';
+
+            let byteNumbers = new Array(b64Data.length);
+
+            for (var i = 0; i < b64Data.length; i++)
+                byteNumbers[i] = b64Data.charCodeAt(i);
+
+            let byteArray = new Uint8Array(byteNumbers);
+
+            let blob = new Blob([byteArray], { type: contentType });
+
+            console.log(blob.size);
+
+            let url = window.URL.createObjectURL(blob);
+
+            if (window.navigator.msSaveBlob) {
+                window.navigator.msSaveOrOpenBlob(blob, fileName + ".p7s");
+            } else {
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.setAttribute('download', fileName + ".p7s");
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
     }
 }
 export class Cert {

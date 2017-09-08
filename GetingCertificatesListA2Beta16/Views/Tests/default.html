@@ -1,59 +1,58 @@
 ﻿<div class="form-horizontal hidden-xs">
     <div class="header-group form-group hidden-xs">
         <div class="col-xs-12 col-lg-4 hidden-xs">
-            <h4>Тестирование</h4>
+            <h4>Формирование электронной подписи документа</h4>
         </div>
         <div class="col-xs-12 col-lg-7 col-xs-7 hidden-xs"></div>
     </div>
 </div>
 <div class="col-xs-12 col-lg-12 col-xs-12">
-    <div class="panel panel-primary">
+    <div class="panel panel-info">
         <div class="panel-heading">
-            Сертификаты
+            Выбор документа для подписания (PDF)
         </div>
         <div class="panel-body">
-            <div class="form-group">
-                <input id="openFileButton" 
-                       type='file' 
-                       (change)="fileChangeEvent($event)" 
-                       placeholder="Upload file..." 
-                       accept=".pdf, application/pdf" 
-                       required="required" 
-                       title="Выбрать PDF" 
-                       class="form-control">
-                <table class="table table-hover table-bordered">
-                    <thead>
-                        <tr>
-                            <th>
-                                <a (click)="onClickRefreshList()" class="btn btn-xs">
-                                    <i class="fa fa-2x fa-refresh"></i>
-                                </a>
-                            </th>
-                            <th>text</th>
-                            <th>value</th>
-                            <th>from</th>
-                            <th>till</th>
-                            <th>algorithm</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="#row of certslist" >
-                            <td title="{{file.file ? 'Подписать  '+file.description+' и получить отсоединённую подпись' : 'Для подписания необходимо выбрать документ.'}}">
-                                <a (click)="onClickSignCreated(row)" 
-                                   class="btn btn-primary btn-xs"
-                                   [class.disabled]="!file.file">
-                                    <i class="fa fa-certificate fa-fw fa-2x"></i>
-                                </a>
-                            </td>
-                            <td>{{row.text}}</td>
-                            <td>{{row.value}}</td>
-                            <td>{{row.from}}</td>
-                            <td>{{row.till}}</td>
-                            <td>{{row.algorithm}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <input type='file'
+                   (change)="fileChangeEvent($event)"
+                   placeholder="Upload file..."
+                   accept=".pdf, application/pdf"
+                   required="required"
+                   title="Выбрать PDF">
+        </div>
+    </div>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            Сертификаты установленные локально
+        </div>
+        <div class="panel-body">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            <a (click)="onClickRefreshList()" class="btn btn-xs">
+                                <i class="fa fa-2x fa-refresh"></i>
+                            </a>
+                        </th>
+                        <th>Читабельное имя</th>
+                        <th>Отпечаток подписи</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="#row of certslist" >
+                        <td title="{{file.file ? 'Подписать  '+file.description+' и получить отсоединённую подпись' : 'Для подписания необходимо выбрать документ.'}}">
+                            <a (click)="onClickSignCreated(row)" 
+                                class="btn btn-primary btn-xs"
+                                [class.disabled]="!file.file">
+                                <i class="fa fa-certificate fa-fw"></i>
+                            </a>
+                        </td>
+                        <td>{{row.text}}
+                                
+                        </td>
+                        <td>{{row.thumbprint}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

@@ -3,7 +3,7 @@ const cadesplugin: any = window['cadesplugin'];
 
 export class CryptoProPlugin {
 
-    private pathToFileAPI = "Scripts/angular2/cadesplugin-api.js";
+    private pathToFileAPI = "Scripts/angular2/cadesplugin_api.js";
     private pathToChromiumAPI =  "Scripts/angular2/async-crypto.es6.js";
     private pathToFileAPIie =  "Scripts/angular2/sync-crypto.js";
     private cspAPI;

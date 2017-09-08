@@ -52,29 +52,33 @@ export class DefaultComponent {
 
     private fileChangeEvent(fileInput: any) {
 
-        this.file.file = <File>fileInput.target.files[0];
+        //this.file.file = <File>fileInput.target.files[0];
         this.file.description = fileInput.target.files[0].name;
-        this.file.metaObjectId = -1;
-        this.file.objectId = -1;
-
-        this.onClickRefreshList();
 
         let selectedFile = fileInput.target.files;
         if (selectedFile.length > 0) {
             let fileToLoad = selectedFile[0];
-            let myReader: FileReader = new FileReader();
-            myReader.onloadend = (e) => {
-                this.file.file = myReader.result;
+            let oFReader: FileReader = new FileReader();
+
+            if (typeof (oFReader.readAsDataURL) != "function") {
+                alert("Method readAsDataURL() is not supported in FileReader.");
+                return;
+            }
+
+            oFReader.onloadend = (e) => {
+                let header = ";base64,";
+                let sFileData = oFReader.result;
+                this.file.file = sFileData.substr(sFileData.indexOf(header) + header.length);
                 console.log(this.file);
             };
-            myReader.readAsDataURL(fileToLoad);
+            oFReader.readAsDataURL(fileToLoad);
+
+            this.onClickRefreshList();
         }
 
     }
 
     private onClickSignCreated(cert: Cert) {
-
         this.srvCerts.signCreated(cert.thumbprint, this.file);
-        
     }
 }
