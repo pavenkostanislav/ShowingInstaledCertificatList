@@ -29,7 +29,7 @@ function GetErrorMessage(e) {
     return err;
 }
 
-function SignCreate(thumbprint, dataToSign) {
+function SignCreate(thumbprint, dataToSign, cadesTypeSelected, isbDetached, tspService) {
     return new Promise(function(resolve, reject){
         cadesplugin.async_spawn(function *(args) {
             try {    
@@ -44,20 +44,16 @@ function SignCreate(thumbprint, dataToSign) {
                 let oSigner = yield cadesplugin.CreateObjectAsync("CAdESCOM.CPSigner");
                 yield oSigner.propset_Certificate(oCertificate);
                 yield oSigner.propset_Options(CAPICOM_CERTIFICATE_INCLUDE_WHOLE_CHAIN);
-                /*
-                *если тестовый личный сертификат выпускали здесь https://www.cryptopro.ru/ui/ то используйте стенд http://www.cryptopro.ru/tsp/tsp.srf
-                *если тестовый личный сертификат выпускали здесь https://www.cryptopro.ru/certsrv/ используйте стенд http://testca.cryptopro.ru/tsp/tsp.srf
-                */
-                let tspService = "http://testca.cryptopro.ru/tsp/tsp.srf";
-                yield oSigner.propset_TSAAddress(tspService);
-
+                if(cadesTypeSelected != 1){
+                    yield oSigner.propset_TSAAddress(tspService);
+                }
                 let oSignedData = yield cadesplugin.CreateObjectAsync("CAdESCOM.CadesSignedData");
                 yield oSignedData.propset_ContentEncoding(CADESCOM_BASE64_TO_BINARY);
                 yield oSignedData.propset_Content(dataToSign);
 
-                let sSignedMessage = yield oSignedData.SignCades(oSigner, CADESCOM_CADES_X_LONG_TYPE_1, true);
+                let sSignedMessage = yield oSignedData.SignCades(oSigner, cadesTypeSelected, isbDetached);
                 
-                yield oSignedData.VerifyCades(sSignedMessage, CADESCOM_CADES_X_LONG_TYPE_1, true);
+                yield oSignedData.VerifyCades(sSignedMessage, cadesTypeSelected, isbDetached);
 
                 yield oStore.Close();
                 args[2](sSignedMessage);
@@ -66,6 +62,7 @@ function SignCreate(thumbprint, dataToSign) {
                 resolve(true);
 
             } catch (err) {
+                alert(err.message);
                 reject(err);
             }
         }, thumbprint, dataToSign, resolve, reject);

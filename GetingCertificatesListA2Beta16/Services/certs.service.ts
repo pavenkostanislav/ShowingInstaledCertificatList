@@ -62,10 +62,10 @@ export class CertsService {
     }
 
 
-    public signCreated(certThumbprint: string, file: FileModel): void {
+    public signCreated(certThumbprint: string, file: FileModel, cadesTypeSelected: boolean, isbDetached: boolean, tspService: string): void {
         this.crypto.then(
             () => {
-                this.crypto.signature(certThumbprint, file.file)
+                this.crypto.signature(certThumbprint, file.file, cadesTypeSelected, isbDetached, tspService)
                     .then(
                     (res: any) => {
                         this.PDFBase64String = res;

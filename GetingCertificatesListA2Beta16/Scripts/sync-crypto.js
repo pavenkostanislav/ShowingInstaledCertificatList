@@ -30,7 +30,7 @@ function GetErrorMessage(e) {
     return err;
 }
 
-function SignCreate(thumbprint, dataToSign) {
+function SignCreate(thumbprint, dataToSign, cadesTypeSelected, isbDetached, tspService) {
 
     let oCertificate;
     let oSigner;
@@ -49,24 +49,23 @@ function SignCreate(thumbprint, dataToSign) {
     oCertificate = oCertificates.Item(1);
     oSigner = cadesplugin.CreateObject("CAdESCOM.CPSigner");
     oSigner.Certificate = oCertificate;
-    /*
-    *если тестовый личный сертификат выпускали здесь https://www.cryptopro.ru/ui/ то используйте стенд http://www.cryptopro.ru/tsp/tsp.srf
-    *если тестовый личный сертификат выпускали здесь https://www.cryptopro.ru/certsrv/ используйте стенд http://testca.cryptopro.ru/tsp/tsp.srf
-    */
-    oSigner.TSAAddress = "http://testca.cryptopro.ru/tsp/tsp.srf";
-
+    if (cadesTypeSelected != 1) {
+        oSigner.TSAAddress = tspService;
+    }
     oSignedData = cadesplugin.CreateObject("CAdESCOM.CadesSignedData");
     oSignedData.ContentEncoding = CADESCOM_BASE64_TO_BINARY;
     oSignedData.Content = dataToSign;
 
     try {
-        sSignedMessage = oSignedData.SignCades(oSigner, CADESCOM_CADES_X_LONG_TYPE_1, true);
+        sSignedMessage = oSignedData.SignCades(oSigner, cadesTypeSelected, isbDetached);
     } catch (err) {
-        return "Failed to create signature. Error: " + GetErrorMessage(err);
+        let errmsg = "Failed to create signature. Error: " + GetErrorMessage(err);
+        alert(errmsg);
+        return errmsg;
     }
 
     try {
-        oSignedData.VerifyCades(sSignedMessage, CADESCOM_CADES_X_LONG_TYPE_1, true);
+        oSignedData.VerifyCades(sSignedMessage, cadesTypeSelected, isbDetached);
     } catch (err) {
         alert("Failed to verify signature. Error: " + cadesplugin.getLastError(err));
         return false;

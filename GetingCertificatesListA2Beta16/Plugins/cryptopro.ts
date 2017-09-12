@@ -107,17 +107,17 @@ export class CryptoProPlugin {
      * @param certificateName
      * @param encodeString
     */
-    public signature(certificateName, encodeString) {
+    public signature(certificatethumbprint, encodeString, cadesTypeSelected: boolean, isbDetached: boolean, tspService: string) {
 
         return {
             then: (resolve, reject) => {
 
                 if (this.isChromium) {
-                    let thenable = window["SignCreate"](certificateName, encodeString);
+                    let thenable = window["SignCreate"](certificatethumbprint, encodeString, cadesTypeSelected, isbDetached, tspService);
                     thenable.then((result) => resolve(result), (error) => reject(error));
                 } else {
                     try {
-                        let result = window["SignCreate"](certificateName, encodeString);
+                        let result = window["SignCreate"](certificatethumbprint, encodeString, cadesTypeSelected, isbDetached, tspService);
                         if (result === null) reject(result);
                         else resolve(result);
                     } catch (error) {

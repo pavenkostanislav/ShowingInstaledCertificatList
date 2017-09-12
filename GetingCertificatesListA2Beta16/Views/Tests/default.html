@@ -1,58 +1,108 @@
-﻿<div class="form-horizontal hidden-xs">
-    <div class="header-group form-group hidden-xs">
-        <div class="col-xs-12 col-lg-4 hidden-xs">
-            <h4>Формирование электронной подписи документа</h4>
+﻿<div class="panel panel-default">
+    <div class="panel-body">
+        <shadow-box [show]="freezeHeader"></shadow-box>
+        <div class="form-horizontal hidden-xs">
+            <div class="header-group form-group hidden-xs">
+                <div class="col-xs-12 col-lg-4 hidden-xs">
+                    <h4>Формирование электронной подписи документа</h4>
+                    <a href="https://dss.cryptopro.ru/Lite/Verify/" target="_blank" class="btn btn-xs btn-default">Сервер электронной подписи КриптоПро DSS</a>
+                </div>
+                <div class="col-xs-12 col-lg-7 col-xs-7 hidden-xs"></div>
+            </div>
         </div>
-        <div class="col-xs-12 col-lg-7 col-xs-7 hidden-xs"></div>
-    </div>
-</div>
-<div class="col-xs-12 col-lg-12 col-xs-12">
-    <div class="panel panel-info">
-        <div class="panel-heading">
-            Выбор документа для подписания (PDF)
+        <div class="col-xs-12 col-lg-12 col-xs-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    Выбор документа для подписания (PDF)
+                </div>
+                <div class="panel-body">
+                    <input type='file'
+                           (change)="fileChangeEvent($event)"
+                           placeholder="Upload file..."
+                           accept=".pdf, application/pdf"
+                           required="required"
+                           title="Выбрать PDF">
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    Сертификаты установленные локально
+                </div>
+                <div class="panel-body">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <a (click)="onClickRefreshList()" class="btn btn-xs">
+                                        <i class="fa fa-2x fa-refresh"></i>
+                                    </a>
+                                </th>
+                                <th>Читабельное имя</th>
+                                <th>Отпечаток подписи</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="#row of certslist" [class.info]="selected === row">
+                                <td title="{{file.file ? 'Подписать  '+file.description+' и получить отсоединённую подпись' : 'Для подписания необходимо выбрать документ.'}}">
+                                    <a (click)="onClickShowModal('SignModalBox');onSelected(row);" class="btn btn-success btn-xs" [class.disabled]="!file.file">
+                                        <i class="fa fa-2x fa-fw fa-signing"></i>
+                                    </a>
+                                </td>
+                                <td>{{row.text}}</td>
+                                <td>{{row.thumbprint}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div class="panel-body">
-            <input type='file'
-                   (change)="fileChangeEvent($event)"
-                   placeholder="Upload file..."
-                   accept=".pdf, application/pdf"
-                   required="required"
-                   title="Выбрать PDF">
-        </div>
-    </div>
-    <div class="panel panel-info">
-        <div class="panel-heading">
-            Сертификаты установленные локально
-        </div>
-        <div class="panel-body">
-            <table class="table table-hover table-bordered">
-                <thead>
-                    <tr>
-                        <th>
-                            <a (click)="onClickRefreshList()" class="btn btn-xs">
-                                <i class="fa fa-2x fa-refresh"></i>
-                            </a>
-                        </th>
-                        <th>Читабельное имя</th>
-                        <th>Отпечаток подписи</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="#row of certslist" >
-                        <td title="{{file.file ? 'Подписать  '+file.description+' и получить отсоединённую подпись' : 'Для подписания необходимо выбрать документ.'}}">
-                            <a (click)="onClickSignCreated(row)" 
-                                class="btn btn-primary btn-xs"
-                                [class.disabled]="!file.file">
-                                <i class="fa fa-certificate fa-fw"></i>
-                            </a>
-                        </td>
-                        <td>{{row.text}}
-                                
-                        </td>
-                        <td>{{row.thumbprint}}</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div id="SignModalBox" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content alert alert-info">
+                    <div class="modal-header cursor-move">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">Подписание</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">Тип подписи</div>
+                        <div class="form-group">
+                            <div class="btn-group btn-group-justified">
+                                <label *ngFor="#row of cadesTypelist" class="btn btn-default" [class.active]="row.id === cadesTypeSelected">
+                                    <input type="radio" (click)="cadesTypeSelected = row.id" [checked]="row.id === cadesTypeSelected">{{row.name}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-group">Используется тестовый сервер TSP</div>
+                        <div class="form-group">
+                            <ul>
+                                <li>если тестовый личный сертификат выпускали здесь https://www.cryptopro.ru/ui/ то используйте стенд http://www.cryptopro.ru/tsp/tsp.srf</li>
+                                <li>если тестовый личный сертификат выпускали здесь https://www.cryptopro.ru/certsrv/ используйте стенд http://testca.cryptopro.ru/tsp/tsp.srf</li>
+                            </ul>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <input type="url" [(value)]="tspServiceSelected" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <span class="checkbox">
+                            <input [(ngModel)]="isbDetached" id="CheckBoxisbDetached" type="checkbox" />
+                            <label for="CheckBoxisbDetached">{{ isbDetached ? 'Отсоединённая' : 'Присоединённая' }} подпись</label>
+                        </span>
+                    </div>
+                    <div class="modal-body">
+                        <span>Подпись будет получена в формате base64.</span>
+                    </div>
+                    <div class="modal-footer">
+                        <a (click)="onClickSignCreated()" class="btn btn-sm btn-success bv-submitbuttons" data-dismiss="modal"><i class="fa fa-fw fa-signing"></i>Подписать</a>
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" onclick="$('#ApprovedModalBox').modal('hide');">Закрыть</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
