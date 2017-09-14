@@ -13,7 +13,7 @@ window["CryptoProPlugin"] = CryptoProPlugin;
 import { DefaultComponent } from "./default";
 
 @RouteConfig([
-    { path: "/Views/Tests/Default", name: "Default", component: DefaultComponent, useAsDefault: true }
+    { path: "/Views/DocSign/Default", name: "Default", component: DefaultComponent, useAsDefault: true }
 ])
 @Component({
     selector: "my-app",

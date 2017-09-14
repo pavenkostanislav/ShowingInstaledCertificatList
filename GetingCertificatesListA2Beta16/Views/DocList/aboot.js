@@ -13,10 +13,9 @@ var common_1 = require("angular2/common");
 var router_1 = require("angular2/router");
 var http_1 = require("angular2/http");
 require("rxjs/Rx");
+var datetime_1 = require("Controls/datetime");
 var select_service_1 = require("Services/select.service");
 var diadoc_service_1 = require("Services/diadoc.service");
-var diadocIntegration_1 = require("./diadocIntegration");
-var datetime_1 = require("Controls/datetime");
 var AppComponent = (function () {
     function AppComponent() {
     }
@@ -25,13 +24,13 @@ var AppComponent = (function () {
 AppComponent = __decorate([
     core_1.Component({
         selector: 'my-app',
-        moduleId: 'Views/DocCardSteps/app/aboot',
+        moduleId: 'Views/DocList/aboot',
         template: '<router-outlet></router-outlet>',
         directives: [router_1.ROUTER_DIRECTIVES],
         providers: [common_1.FORM_PROVIDERS],
     }),
     router_1.RouteConfig([
-        { path: '/Views/DocCards/Default', name: 'Diadoc', component: diadocIntegration_1.DiadocIntegrationComponent, useAsDefault: true }
+        { path: '/Views/DocList/Default', name: 'Default', component: Default, useAsDefault: true }
     ])
 ], AppComponent);
 exports.AppComponent = AppComponent;

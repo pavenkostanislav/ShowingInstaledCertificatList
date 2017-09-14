@@ -6,24 +6,25 @@ import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from 'angular2/router'
 import {HTTP_PROVIDERS} from 'angular2/http';
 import 'rxjs/Rx';
 
+import {InitDateExt} from 'Controls/datetime';
+
 import { SelectService } from 'Services/select.service';
 import { DiadocService } from 'Services/diadoc.service';
 
-import { DiadocIntegrationComponent } from './diadocIntegration';
+import { DefaultComponent } from "./default";
 
-import {InitDateExt} from 'Controls/datetime';
 
 
 @Component({
 	selector: 'my-app',
-	moduleId: 'Views/DocCardSteps/app/aboot',
+	moduleId: 'Views/DocList/aboot',
 	template: '<router-outlet></router-outlet>',
     directives: [ROUTER_DIRECTIVES],
 	providers: [FORM_PROVIDERS],
 })
 
     @RouteConfig([
-        { path: '/Views/DocCards/Default', name: 'Diadoc', component: DiadocIntegrationComponent, useAsDefault: true }
+        { path: '/Views/DocList/Default', name: 'Default', component: Default, useAsDefault: true }
 ])
 export class AppComponent {
 }

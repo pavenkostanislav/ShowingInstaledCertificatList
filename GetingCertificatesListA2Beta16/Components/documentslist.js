@@ -11,7 +11,7 @@ require("rxjs/Rx");
 var diadoc_service_1 = require("Services/diadoc.service");
 var datetimepicker_1 = require("Controls/datetimepicker");
 var shadowbox_1 = require("Controls/shadowbox");
-var common_1 = require("common");
+var showmodal_1 = require("Controls/showmodal");
 var selectA2_1 = require("Controls/selectA2");
 var select2_1 = require("Controls/select2");
 var dropdown_1 = require("Controls/dropdown/dropdown");
@@ -52,7 +52,7 @@ var DocumentsListComponent = (function () {
                     .subscribe(function (data) {
                     _this.listDocCard = data;
                     _this.clearFind(true);
-                }, function (error) { return common_1.ShowError(error); }, function () { });
+                }, function (error) { return showmodal_1.ShowError(error); }, function () { });
             }
             else {
                 this.doSeach();
@@ -77,7 +77,7 @@ var DocumentsListComponent = (function () {
         this.freeze = true;
         this.isEdit = false;
         this.diadocSrv.loadListDocumentsMessage(this.userId, messageId).subscribe(function (result) {
-            common_1.ShowComplete();
+            showmodal_1.ShowComplete();
             _this.responceModel = result;
             _this.calculatePages();
             _this.freeze = false;
@@ -123,7 +123,7 @@ var DocumentsListComponent = (function () {
         this.diadocSrv.setListDocuments(this.userId, this.responceModel.List).subscribe(function (result) {
             _this.doSeach();
             _this.freeze = false;
-            common_1.ShowComplete();
+            showmodal_1.ShowComplete();
             _this.updated.emit('refresh');
         }, function (error) {
             console.log(error);
@@ -137,7 +137,7 @@ var DocumentsListComponent = (function () {
             this.diadocSrv.getListDocCard(this.docCardId)
                 .subscribe(function (data) {
                 _this.listDocCard = data;
-            }, function (error) { return common_1.ShowError(error); }, function () { });
+            }, function (error) { return showmodal_1.ShowError(error); }, function () { });
         }
     };
     DocumentsListComponent.prototype.showSeach = function () {
@@ -570,7 +570,7 @@ var DocumentsListComponent = (function () {
         this.diadocSrv.loadDocument(this.userId, row.messageId, row.entityId).subscribe(function (result) {
             _this.doSeach();
             _this.freeze = false;
-            common_1.ShowComplete();
+            showmodal_1.ShowComplete();
             _this.updated.emit('refresh');
         }, function (error) {
             console.log(error);
@@ -615,7 +615,7 @@ var DocumentsListComponent = (function () {
         this.diadocSrv.setDocuments(this.userId, row).subscribe(function (result) {
             _this.doSeach();
             _this.freeze = false;
-            common_1.ShowComplete();
+            showmodal_1.ShowComplete();
             _this.updated.emit('refresh');
         }, function (error) {
             console.log(error);
@@ -647,7 +647,7 @@ var DocumentsListComponent = (function () {
         this.diadocSrv.setDocuments(this.userId, row).subscribe(function (result) {
             _this.doSeach();
             _this.freeze = false;
-            common_1.ShowComplete();
+            showmodal_1.ShowComplete();
         }, function (error) {
             console.log(error);
             _this.freeze = false;
@@ -682,7 +682,7 @@ __decorate([
 DocumentsListComponent = __decorate([
     core_1.Component({
         selector: 'documents-list',
-        moduleId: 'a2/_Shared/Components/Diadoc/documentsList',
+        moduleId: 'Components/documentsList',
         templateUrl: './documentslist.html',
         styles: ['.panel-body {position: relative;}'],
         directives: [shadowbox_1.ShadowBox, selectA2_1.SelectA2, select2_1.Select2, datetimepicker_1.DateTimePicker, paging_1.Paging,

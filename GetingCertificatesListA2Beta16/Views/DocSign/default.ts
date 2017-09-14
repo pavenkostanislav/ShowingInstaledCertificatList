@@ -1,11 +1,11 @@
 ﻿import { Component } from 'angular2/core';
 "rxjs";
 
-import { SignCreatedComponent } from 'Components/Diadoc/signcreated';
+import { SignCreatedComponent } from 'Components/signcreated';
 
 @Component({
     selector: "Default",
-    moduleId: "a2/Tests/Default",
+    moduleId: "Views/DocSign/Default",
     templateUrl: "./default.html",
     directives: [SignCreatedComponent]
 })

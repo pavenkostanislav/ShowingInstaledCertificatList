@@ -6,17 +6,17 @@ import { Subscription } from 'rxjs/Rx';
 import { IMetaUser } from "Services/metauser.service";
 
 import { SubUser } from "Components/subuser";
-import { DocumentsListComponent } from 'Components/Diadoc/documentsList';
+import { DocumentsListComponent } from 'Components/documentsList';
 
 
 @Component({
-    selector: 'diadocIntegration',
-    moduleId: 'a2/DocCards/diadocIntegration',
-    templateUrl: './diadocIntegration.html',
+    selector: 'Default',
+    moduleId: 'Views/DocList/Default',
+    templateUrl: './default.html',
     directives: [DocumentsListComponent, SubUser],
     
 })
-export class DiadocIntegrationComponent implements OnInit
+export class DefaultComponent implements OnInit
 {
 
     private currentUser: IMetaUser = {};

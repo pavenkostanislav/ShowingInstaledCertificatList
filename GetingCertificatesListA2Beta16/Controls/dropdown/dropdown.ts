@@ -15,7 +15,7 @@ export class Item {
 
 @Component({
 	selector: 'dropdown',
-	moduleId: 'a2/_Shared/Controls/dropdown/dropdown',
+	moduleId: 'Controls/dropdown/dropdown',
 	templateUrl: './dropdown.html',
 	styleUrls: ['./dropdown.css'],
 	pipes: [SearchPipe],

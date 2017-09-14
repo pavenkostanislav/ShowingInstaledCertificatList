@@ -5,7 +5,7 @@ import { DiadocService, FindModel, DiadocResponceModel } from 'Services/diadoc.s
 import { DateTimePicker } from "Controls/datetimepicker";
 
 import { ShadowBox } from 'Controls/shadowbox';
-import { ShowError, ShowComplete } from 'common';
+import { ShowError, ShowComplete } from 'Controls/showmodal';
 import { SelectA2 } from 'Controls/selectA2';
 import { Select2 } from 'Controls/select2';
 import { DropDownComponent, DropdownValueAccessor } from "Controls/dropdown/dropdown";
@@ -13,7 +13,7 @@ import { Paging } from 'Controls/paging';
 
 @Component({
     selector: 'documents-list',
-    moduleId: 'a2/_Shared/Components/Diadoc/documentsList',
+    moduleId: 'Components/documentsList',
     templateUrl: './documentslist.html',
     styles: ['.panel-body {position: relative;}'],
     directives: [ShadowBox, SelectA2, Select2, DateTimePicker, Paging

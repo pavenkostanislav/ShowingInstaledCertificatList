@@ -10,7 +10,7 @@ import { CryptoProPlugin, CryptoProModel } from "Plugins/cryptopro.plugin";
 
 @Component({
     selector: 'signcreated',
-    moduleId: "a2/_Shared/Components/Diadoc/signcreated",
+    moduleId: "Components/signcreated",
     templateUrl: "./signcreated.html",
     directives: [ShadowBox],
     providers: [FileUploadService, CryptoProPlugin]

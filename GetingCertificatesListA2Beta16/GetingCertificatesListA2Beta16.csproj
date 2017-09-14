@@ -83,8 +83,8 @@
     <Content Include="Controls\select2.ts" />
     <Content Include="Controls\selectA2.ts" />
     <Content Include="Controls\shadowbox.ts" />
-    <TypeScriptCompile Include="Components\documentslist.ts" />
-    <TypeScriptCompile Include="Components\signcreated.ts" />
+    <Content Include="Components\documentslist.ts" />
+    <Content Include="Components\signcreated.ts" />
     <TypeScriptCompile Include="Controls\datetime.ts" />
     <TypeScriptCompile Include="Controls\showmodel.ts" />
     <TypeScriptCompile Include="Plugins\cryptopro.plugin.ts" />
@@ -93,8 +93,8 @@
     <Content Include="Views\DocSign\default.ts" />
     <Content Include="Services\diadoc.service.ts" />
     <TypeScriptCompile Include="Scripts\angular2\event_emitter.ts" />
-    <TypeScriptCompile Include="Views\DocList\aboot.ts" />
-    <TypeScriptCompile Include="Views\DocList\default.ts" />
+    <Content Include="Views\DocList\aboot.ts" />
+    <Content Include="Views\DocList\default.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

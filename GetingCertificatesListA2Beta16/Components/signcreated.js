@@ -188,7 +188,7 @@ __decorate([
 SignCreatedComponent = __decorate([
     core_1.Component({
         selector: 'signcreated',
-        moduleId: "a2/_Shared/Components/Diadoc/signcreated",
+        moduleId: "Components/signcreated",
         templateUrl: "./signcreated.html",
         directives: [shadowbox_1.ShadowBox],
         providers: [fileupload_service_1.FileUploadService, cryptopro_plugin_1.CryptoProPlugin]
