@@ -74,8 +74,6 @@
     <TypeScriptCompile Include="Services\fileupload.service.ts" />
     <TypeScriptCompile Include="Views\Tests\aboot.ts" />
     <TypeScriptCompile Include="Views\Tests\default.ts" />
-    <TypeScriptCompile Include="Plugins\cryptopro.ts" />
-    <TypeScriptCompile Include="Services\certs.service.ts" />
     <TypeScriptCompile Include="Services\diadoc.service.ts" />
     <TypeScriptCompile Include="Scripts\angular2\event_emitter.ts" />
   </ItemGroup>
@@ -85,7 +83,8 @@
   <ItemGroup>
     <Folder Include="ApiControllers\" />
     <Folder Include="Components\" />
-    <Folder Include="Controls\dropdown\" />
+    <Folder Include="Controls\" />
+    <Folder Include="Plugins\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
