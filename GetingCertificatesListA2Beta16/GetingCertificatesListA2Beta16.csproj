@@ -45,6 +45,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="Components\signcreated.html" />
     <Content Include="Controls\dropdown\dropdown.css" />
     <Content Include="Controls\dropdown\dropdown.html" />
     <Content Include="Scripts\angular2\es6-shim.map" />
@@ -81,6 +82,8 @@
     <Content Include="Controls\select2.ts" />
     <Content Include="Controls\selectA2.ts" />
     <Content Include="Controls\shadowbox.ts" />
+    <TypeScriptCompile Include="Components\documentslist.ts" />
+    <TypeScriptCompile Include="Components\signcreated.ts" />
     <TypeScriptCompile Include="Plugins\cryptopro.plugin.ts" />
     <Content Include="Services\fileupload.service.ts" />
     <Content Include="Views\Tests\aboot.ts" />
@@ -95,7 +98,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ApiControllers\" />
-    <Folder Include="Components\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
