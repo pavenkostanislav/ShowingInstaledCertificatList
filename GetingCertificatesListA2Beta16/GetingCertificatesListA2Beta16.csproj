@@ -52,8 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\cadesplugin_api.js" />
-    <Content Include="Views\DocCards\default.html" />
-    <Content Include="Views\Tests\default.html" />
+    <Content Include="Views\DocList\default.html" />
+    <Content Include="Views\DocSign\default.html" />
     <Content Include="app.html" />
     <Content Include="Scripts\angular2\angular2-polyfills.js" />
     <Content Include="Scripts\angular2\angular2.js" />
@@ -89,12 +89,12 @@
     <TypeScriptCompile Include="Controls\showmodel.ts" />
     <TypeScriptCompile Include="Plugins\cryptopro.plugin.ts" />
     <Content Include="Services\fileupload.service.ts" />
-    <Content Include="Views\Tests\aboot.ts" />
-    <Content Include="Views\Tests\default.ts" />
+    <Content Include="Views\DocSign\aboot.ts" />
+    <Content Include="Views\DocSign\default.ts" />
     <Content Include="Services\diadoc.service.ts" />
     <TypeScriptCompile Include="Scripts\angular2\event_emitter.ts" />
-    <TypeScriptCompile Include="Views\DocCards\aboot.ts" />
-    <TypeScriptCompile Include="Views\DocCards\default.ts" />
+    <TypeScriptCompile Include="Views\DocList\aboot.ts" />
+    <TypeScriptCompile Include="Views\DocList\default.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
