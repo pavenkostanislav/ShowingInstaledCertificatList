@@ -85,9 +85,9 @@
     <Content Include="Controls\shadowbox.ts" />
     <Content Include="Components\documentslist.ts" />
     <Content Include="Components\signcreated.ts" />
-    <TypeScriptCompile Include="Controls\datetime.ts" />
-    <TypeScriptCompile Include="Controls\showmodel.ts" />
-    <TypeScriptCompile Include="Plugins\cryptopro.plugin.ts" />
+    <Content Include="Controls\datetime.ts" />
+    <Content Include="Controls\showmodel.ts" />
+    <Content Include="Plugins\cryptopro.plugin.ts" />
     <Content Include="Services\fileupload.service.ts" />
     <Content Include="Views\DocSign\aboot.ts" />
     <Content Include="Views\DocSign\default.ts" />
