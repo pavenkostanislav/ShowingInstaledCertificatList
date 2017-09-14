@@ -2,6 +2,7 @@
 import { Http, Headers, RequestOptions, Request, RequestMethod, Blob, BlobPropertyBag } from 'angular2/http';
 import { Observable } from 'rxjs/Rx';
 import 'Scripts/angular2/base64.js';
+
 @Injectable()
 export class DiadocService {
 
@@ -60,17 +61,6 @@ export class DiadocService {
     }
 
     public getDDAuthToken(cert: any) {
-    /*
-        let body: any = Base64.decode(signature);
-
-        Base64.decode('ZGFua29nYWk=');  // dankogai
-            Base64.decode('5bCP6aO85by+');  // 小飼弾
-            Base64.decode('5bCP6aO85by-');  // 小飼弾
-
-            Base64.encode('dankogai');  // ZGFua29nYWk=
-            Base64.encode('小飼弾');    // 5bCP6aO85by+
-            Base64.encodeURI('小飼弾'); // 5bCP6aO85by-
-     */
         let body = JSON.stringify(cert);
 
         let headers = new Headers();

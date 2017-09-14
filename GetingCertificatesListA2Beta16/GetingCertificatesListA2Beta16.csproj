@@ -45,6 +45,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="Controls\dropdown\dropdown.css" />
+    <Content Include="Controls\dropdown\dropdown.html" />
     <Content Include="Scripts\angular2\es6-shim.map" />
   </ItemGroup>
   <ItemGroup>
@@ -71,6 +73,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Controls\datetimepicker.ts" />
+    <TypeScriptCompile Include="Controls\dropdown\dropdown.ts" />
+    <TypeScriptCompile Include="Controls\dropdown\search.pipe.ts" />
+    <TypeScriptCompile Include="Controls\paging.ts" />
+    <TypeScriptCompile Include="Controls\select2.ts" />
+    <TypeScriptCompile Include="Controls\selectA2.ts" />
+    <TypeScriptCompile Include="Controls\shadowbox.ts" />
+    <TypeScriptCompile Include="Plugins\cryptopro.plugin.ts" />
     <TypeScriptCompile Include="Services\fileupload.service.ts" />
     <TypeScriptCompile Include="Views\Tests\aboot.ts" />
     <TypeScriptCompile Include="Views\Tests\default.ts" />
@@ -83,8 +93,6 @@
   <ItemGroup>
     <Folder Include="ApiControllers\" />
     <Folder Include="Components\" />
-    <Folder Include="Controls\" />
-    <Folder Include="Plugins\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

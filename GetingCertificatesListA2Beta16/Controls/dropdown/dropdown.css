@@ -1,0 +1,79 @@
+﻿dropdown.form-control {
+	padding: 4px 0;
+}
+
+.dropdown {
+	position: relative;
+	margin-left: -4px;
+    margin-right: -4px;
+}
+
+.dropdown.disabled{
+	background-color: #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+	opacity:0.5;
+}
+.dropdown.disabled .dropdowntext {
+	opacity: 1;
+	color:black;
+}
+
+.dropdowncontrol {
+	line-height: 24px;
+	margin-top: -4px;
+	padding-left:6px;
+	margin-right: 48px;
+	overflow: hidden;
+    text-decoration: none;
+    white-space: nowrap;
+	height: 24px;
+}
+
+.buttondown, .buttonclear {
+	cursor:pointer;
+	position:absolute;
+}
+
+.buttonclear {
+	right: 24px;
+}
+.buttondown{
+	right: 4px;
+}
+
+.dropdownform {
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	padding: 5px;
+	position: relative;
+	background-color: #fff;
+	z-index: 10000;
+	
+}
+
+.dropdownitems {
+	max-height: 200px;
+	overflow-x: hidden;
+    overflow-y: auto;
+	padding-left:4px;
+	padding-right:4px;
+}
+
+.searchinput {
+	width:100%;
+}
+.itemslist {
+	list-style:none;
+	padding:0;
+	margin:0;
+}
+.item {
+	padding:2px 5px;
+	cursor:pointer;
+	display: list-item;
+    list-style: outside none none;
+}
+.item:hover {
+	background-color: #d9edf7;
+}
