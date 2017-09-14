@@ -73,18 +73,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Controls\datetimepicker.ts" />
-    <TypeScriptCompile Include="Controls\dropdown\dropdown.ts" />
-    <TypeScriptCompile Include="Controls\dropdown\search.pipe.ts" />
-    <TypeScriptCompile Include="Controls\paging.ts" />
-    <TypeScriptCompile Include="Controls\select2.ts" />
-    <TypeScriptCompile Include="Controls\selectA2.ts" />
-    <TypeScriptCompile Include="Controls\shadowbox.ts" />
+    <Content Include="Controls\datetimepicker.ts" />
+    <Content Include="Controls\dropdown\dropdown.ts" />
+    <Content Include="Controls\dropdown\search.pipe.ts" />
+    <Content Include="Controls\paging.ts" />
+    <Content Include="Controls\select2.ts" />
+    <Content Include="Controls\selectA2.ts" />
+    <Content Include="Controls\shadowbox.ts" />
     <TypeScriptCompile Include="Plugins\cryptopro.plugin.ts" />
-    <TypeScriptCompile Include="Services\fileupload.service.ts" />
-    <TypeScriptCompile Include="Views\Tests\aboot.ts" />
-    <TypeScriptCompile Include="Views\Tests\default.ts" />
-    <TypeScriptCompile Include="Services\diadoc.service.ts" />
+    <Content Include="Services\fileupload.service.ts" />
+    <Content Include="Views\Tests\aboot.ts" />
+    <Content Include="Views\Tests\default.ts" />
+    <Content Include="Services\diadoc.service.ts" />
     <TypeScriptCompile Include="Scripts\angular2\event_emitter.ts" />
   </ItemGroup>
   <ItemGroup>
