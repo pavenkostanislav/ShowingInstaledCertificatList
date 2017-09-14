@@ -1,12 +1,12 @@
 ﻿import { Component, Input, OnChanges, SimpleChange, Output, EventEmitter, NgZone } from 'angular2/core';
 import { Observable, Observer } from "rxjs";
 
-import { ShadowBox } from "shared/Controls/shadowbox";
-import { ShowError, ShowMessage, ShowRecordInfo, ShowModal } from "shared/common";
+import { ShadowBox } from "Controls/shadowbox";
+import { ShowError, ShowMessage, ShowRecordInfo, ShowModal } from "common";
 
-import { FileUploadService, FileModel } from "shared/Services/fileupload.service";
+import { FileUploadService, FileModel } from "Services/fileupload.service";
 
-import { CryptoProPlugin, CryptoProModel } from "shared/Plugins/cryptopro.plugin";
+import { CryptoProPlugin, CryptoProModel } from "Plugins/cryptopro.plugin";
 
 @Component({
     selector: 'signcreated',

@@ -3,7 +3,7 @@ import {CORE_DIRECTIVES, FORM_DIRECTIVES, Control, ControlValueAccessor, NG_VALU
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/Rx';
 
-import {SelectService} from 'shared/Services/select.service';
+import {SelectService} from 'Services/select.service';
 import {SearchPipe} from './search.pipe';
 
 export class Item {

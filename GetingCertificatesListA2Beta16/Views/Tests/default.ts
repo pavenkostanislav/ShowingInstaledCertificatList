@@ -1,7 +1,7 @@
 ﻿import { Component } from 'angular2/core';
 "rxjs";
 
-import { SignCreatedComponent } from 'shared/Components/Diadoc/signcreated';
+import { SignCreatedComponent } from 'Components/Diadoc/signcreated';
 
 @Component({
     selector: "Default",

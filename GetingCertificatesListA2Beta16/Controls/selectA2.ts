@@ -4,7 +4,7 @@ import {Component, OnInit, OnChanges, OnDestroy, Input, Output, EventEmitter, El
 import {CORE_DIRECTIVES} from 'angular2/common';
 import 'rxjs/Rx';
 
-import {SelectService} from 'shared/Services/select.service';
+import {SelectService} from 'Services/select.service';
 
 @Component({
 	selector: 'selectA2',

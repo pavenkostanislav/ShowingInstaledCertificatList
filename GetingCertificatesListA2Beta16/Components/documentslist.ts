@@ -1,15 +1,15 @@
 ﻿import { Component, Input, OnChanges, SimpleChange, Output, EventEmitter } from 'angular2/core';
 import "rxjs/Rx";
 
-import { DiadocService, FindModel, DiadocResponceModel } from 'shared/Services/diadoc.service';
-import { DateTimePicker } from "shared/Controls/datetimepicker";
+import { DiadocService, FindModel, DiadocResponceModel } from 'Services/diadoc.service';
+import { DateTimePicker } from "Controls/datetimepicker";
 
-import { ShadowBox } from 'shared/Controls/shadowbox';
-import { ShowError, ShowComplete } from 'shared/common';
-import { SelectA2 } from 'shared/Controls/selectA2';
-import { Select2 } from 'shared/Controls/select2';
-import { DropDownComponent, DropdownValueAccessor } from "shared/Controls/dropdown/dropdown";
-import { Paging } from 'shared/Controls/paging';
+import { ShadowBox } from 'Controls/shadowbox';
+import { ShowError, ShowComplete } from 'common';
+import { SelectA2 } from 'Controls/selectA2';
+import { Select2 } from 'Controls/select2';
+import { DropDownComponent, DropdownValueAccessor } from "Controls/dropdown/dropdown";
+import { Paging } from 'Controls/paging';
 
 @Component({
     selector: 'documents-list',

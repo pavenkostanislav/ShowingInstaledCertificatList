@@ -52,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\cadesplugin_api.js" />
-    <Content Include="Views\DocCards\diadocIntegration.html" />
+    <Content Include="Views\DocCards\default.html" />
     <Content Include="Views\Tests\default.html" />
     <Content Include="app.html" />
     <Content Include="Scripts\angular2\angular2-polyfills.js" />
@@ -94,7 +94,7 @@
     <Content Include="Services\diadoc.service.ts" />
     <TypeScriptCompile Include="Scripts\angular2\event_emitter.ts" />
     <TypeScriptCompile Include="Views\DocCards\aboot.ts" />
-    <TypeScriptCompile Include="Views\DocCards\diadocIntegration.ts" />
+    <TypeScriptCompile Include="Views\DocCards\default.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

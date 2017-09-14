@@ -3,10 +3,10 @@ import { FORM_DIRECTIVES, ControlGroup, Control, Validator, Validators, FORM_PRO
 import { ROUTER_DIRECTIVES, RouteParams, Router } from 'angular2/router';
 import { Subscription } from 'rxjs/Rx';
 
-import { IMetaUser } from "shared/Services/metauser.service";
+import { IMetaUser } from "Services/metauser.service";
 
-import { SubUser } from "shared/Components/subuser";
-import { DocumentsListComponent } from 'shared/Components/Diadoc/documentsList';
+import { SubUser } from "Components/subuser";
+import { DocumentsListComponent } from 'Components/Diadoc/documentsList';
 
 
 @Component({

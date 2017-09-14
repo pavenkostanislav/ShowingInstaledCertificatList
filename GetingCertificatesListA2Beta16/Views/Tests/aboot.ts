@@ -6,8 +6,8 @@ import {HTTP_PROVIDERS} from "angular2/http";
 import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig} from "angular2/router";
 import "rxjs/Rx";
 
-import { DiadocService } from "shared/Services/diadoc.service";
-import { CryptoProPlugin } from "shared/Plugins/cryptopro.plugin";
+import { DiadocService } from "Services/diadoc.service";
+import { CryptoProPlugin } from "Plugins/cryptopro.plugin";
 window["CryptoProPlugin"] = CryptoProPlugin;
 
 import { DefaultComponent } from "./default";
