@@ -1,0 +1,223 @@
+﻿<shadow-box [show]="freeze"></shadow-box>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <a (click)="showSeach()" class="btn-cell" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+            <i class="fa fa-search{{isSeachOpen?'-minus':'-plus'}}"></i>&nbsp;Параметры фильтров
+        </a>
+    </div>
+    <div id="collapse2" class="panel-collapse fade collapse">
+        <div class="panel-body">
+            <fieldset class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-xs-12 col-sm-3 col-md-1 col-lg-1 control-label">Контрагент</div>
+                    <div class="col-xs-12 col-sm-9 col-md-5 col-lg-5">
+                        <selectA2 [typeName]="'CounteragentBox'" [parentId]="11" [minTerm]="0" [(value)]="findModel.counteragentBoxId"></selectA2>
+                    </div>
+                    <div class="col-xs-12 col-sm-3 col-md-1 col-lg-1 control-label">Комплект</div>
+                    <div class="col-xs-12 col-sm-9 col-md-5 col-lg-5">
+                        <input class="form-control" type="text" title="ИД Комплекта в диадок" [(ngModel)]="findModel.messageId" [disabled]="true">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12 col-sm-3 col-md-1 col-lg-1 control-label">Тип</div>
+                    <div class="col-xs-12 col-sm-9 col-md-5 col-lg-5">
+                        <selectA2 [typeName]="'DocumentType'" [minTerm]="1" [(value)]="findModel.docTypeId"></selectA2>
+                    </div>
+                    <div class="col-xs-12 col-sm-3 col-md-1 col-lg-1 control-label">Рег. номер</div>
+                    <div class="col-xs-12 col-sm-9 col-md-5 col-lg-5">
+                        <selectA2 [typeName]="'DocCard'" [(value)]="findModel.docCardId"></selectA2>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12 col-sm-3 col-md-1 col-lg-1 control-label">Текст</div>
+                    <div class="col-xs-12 col-sm-9 col-md-5 col-lg-5">
+                        <textarea rows="1" class="form-control" title="Фильтр по тексту" [(ngModel)]="findModel.text"></textarea>
+                    </div>
+                    <div class="col-xs-12 col-sm-3 col-md-1 col-lg-1 control-label" title="Дата регистрации комплекта диадок с:">Дата с</div>
+                    <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">
+                        <date-time [(value)]="findModel.dateB" [options]="{pickTime:false, language:'ru'}" title="Дата регистрации документа с:"></date-time>
+                    </div>
+                    <div class="col-xs-12 col-sm-3 col-md-1 col-lg-1 control-label" title="Дата регистрации комплекта диадок по:">по</div>
+                    <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">
+                        <date-time [(value)]="findModel.dateE" [options]="{pickTime:false, language:'ru'}" title="Дата регистрации документа по:"></date-time>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12 col-sm-3 col-md-1 col-lg-1 control-label">Входящий №</div>
+                    <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">
+                        <input class="form-control" type="text" [(ngModel)]="findModel.num">
+                    </div>
+                    <div class="col-xs-12 col-sm-3 col-md-1 col-lg-1 control-label">Дата</div>
+                    <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">
+                        <date-time [options]="{pickTime:false, language:'ru'}" [(value)]="findModel.date"></date-time>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-center">
+                        <a (click)="doSeach()" title="Выполнить запрос" class="btn btn-xs btn-info">
+                            <i class="fa fa-2x fa-fw fa-search"></i>
+                        </a>
+                        <a (click)="clearFind(true)" title="Сбросить параметры всех фильтров на первоначальные" class="btn btn-xs btn-info">
+                            <i class="fa fa-2x fa-fw fa-undo"></i>
+                        </a>
+                        <a (click)="clearFind(false)" title="Сбросить параметры всех фильтров" class="btn btn-xs btn-info">
+                            <i class="fa fa-2x fa-fw fa-eraser"></i>
+                        </a>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+<div class="panel panel-primary">
+    <div class="panel-heading">Результаты поиска</div>
+    <div class="panel-body">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th colspan="3">
+                        <a (click)="doEdit()" title="Отредактировать"
+                            class="btn btn-xs {{ !findModel.messageId ? '' : 'btn-primary' }}"
+                            [class.disabled]="!findModel.messageId">
+                            <i class="fa fa-fw fa-2x fa-{{isEdit ? 'undo':'edit'}}"></i>
+                        </a>
+                        <a (click)="doSave()" title="Сохранить изменения" class="btn btn-xs btn-primary" *ngIf="isEdit" [class.disabled]="!findModel.messageId">
+                            <i class="fa fa-2x fa-fw fa-save"></i>
+                        </a>
+                        <span>СЭД</span>
+                    </th>
+                    <th>
+                        <a (click)="loadMessage(findModel.messageId)"
+                            class="btn btn-xs {{ !findModel.messageId ? '' : 'btn-primary' }}"
+                            [class.disabled]="!findModel.messageId"
+                            title="Создать новые карточки для несвязанных документов из выбранного комплекта">
+                            <i class="fa fa-2x fa-plus fa-fw"></i>
+                        </a>
+                        <spam class="text-info"><i class="fa fa-link"></i></spam>
+                    </th>
+                    <th colspan="8"><span>Диадок</span></th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th><span>Регистр. номер</span></th>
+                    <th></th>
+                    <th><span>Компания</span></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th><span>Файл</span></th>
+                    <th><span>Сумма</span></th>
+                    <th></th>
+                    <th></th>
+                    <th><span>Статус</span></th>
+                    <th><span>Дата создания<br />комплекта</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="#att of responceModel.List, #i=index" class="{{i != 0 && att.messageId == responceModel.List[i-1].messageId ? '' : 'border-top-info' }}" title="{{getDocumentType (att.documentType) + ', ' + getRevocationStatus(att.revocationStatus)}}">
+                    <td title="{{att.isDocCardParent ? 'Главный документ в комплекте СЭД' : ''}}">
+                        <spam class="text-warning"><i class="fa fa-key" *ngIf="att.isDocCardParent"></i></spam>
+                    </td>
+                    <td style="max-width:30px;min-width:30px;width:30px;" title="{{att.active ? 'Обновляется вложение' : 'Выбрать для обновления вложения'}}" class="text-center">
+
+
+                        <template [ngIf]="!docCardId">
+                            <template [ngIf]="!isEdit">
+                                <spam class="text-info"><i class="fa fa-cloud-download" *ngIf="att.active"></i></spam>
+                            </template>
+                            <template [ngIf]="isEdit">
+                                <input type="checkbox" [(ngModel)]="att.active" />
+                            </template>
+                        </template>
+                        <template [ngIf]="docCardId">
+                            <a (click)="doSaveActive(att)" title="{{att.active ? 'Отключить загрузку архива' : 'Включить загрузку архива'}}" class="btn btn-xs btn-primary" *ngIf="att.docCardId">
+                                <i class="fa fa-fw fa-cloud{{att.active ? '-download' : ''}}"></i>
+                            </a>
+                        </template>
+
+
+                    </td>
+                    <template [ngIf]="!isEdit">
+                        <td title="{{att.docCardId}}">
+                            <a class="btn btn-xs" href="{{att.editUrl}}" title="Открыть карточку" *ngIf="att.docCardId">
+                                <i class="fa fa-fw fa-external-link"></i>
+                                {{att.docCardId ?  ( att.docCardDocNumber ? att.docType + " №" + att.docCardDocNumber : att.docType + " №" + att.docCardId ) : ''}}
+                            </a>
+                        </td>
+                    </template>
+                    <template [ngIf]="isEdit">
+                        <td style="max-width:350px;min-width:350px;width:350px;" title="{{att.docCardId}}">
+                            <template [ngIf]="!docCardId">
+                                <selectA2 [typeName]="'DocCard'" [minTerm]="0" [(value)]="att.docCardId" [disabled]="!isEdit" (valueChange)="docCardIdChange($event)"></selectA2>
+                            </template>
+                            <template [ngIf]="docCardId">
+                                <select2 [options]="listDocCard" [(value)]="att.docCardId" [disabled]="!isEdit" (valueChange)="docCardIdChange($event)"></select2>
+                            </template>
+                        </td>
+                    </template>
+                    <td class="text-center" title="{{att.docCardId ? 'Cвязанные карточки. ' + att.active ? 'Архивы обновляются.' : 'Запрещено обновление архивов!' : 'НЕ связанные карточки'}}">
+
+
+                        <template [ngIf]="!docCardId">
+                            <a (click)="doNewDocCard(att)" class="btn btn-xs btn-primary" *ngIf="!att.docCardId" title="Создать новую карточку в СЭД для выбранного документа из диадок">
+                                <i class="fa fa-plus fa-fw"></i>
+                            </a>
+                            <spam class="text-info"><i class="fa fa-{{att.docCardId ? 'link' : 'chain-broken'}}"></i></spam>
+                        </template>
+                        <template [ngIf]="docCardId">
+                            <a (click)="doSaveDocCard(att)" title="{{att.docCardId ? 'Удалить связь с текущим документом?' : 'Связать текущий документ с выбранным из диадок?'}}" class="btn btn-xs btn-primary" *ngIf="docCardId">
+                                <i class="fa fa-fw fa-{{att.docCardId ? 'link' : 'chain-broken'}}"></i>
+                            </a>
+                        </template>
+
+
+                    </td>
+                    <td title="Отфильтровать по компании">
+                        <a (click)="doSeach2('counteragentBoxId', att.counteragentBoxId)" class="btn-cell">
+                            {{i != 0 && att.messageId == responceModel.List[i-1].messageId ? '' : att.counteragentBox}}
+                        </a>
+                    </td>
+                    <td title="{{att.parentId == 0 ? 'Главный документ в комплекте диадока' : ''}}">
+                        <spam class="text-warning"><i class="fa fa-key" *ngIf="att.parentId == 0"></i></spam>
+                    </td>
+                    <td class="text-center">
+                        <a (click)="getDocUrl(att.messageId,att.entityId)" title="Перейти к документу на сайт диадок" class="btn btn-xs btn-primary">
+                            <i class="fa fa-fw fa-external-link"></i>
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        <a href="/Views/AttachmentReferences/DownloadPrintform/{{att.id}}" title="Скачать печатную форму из диадок" class="btn btn-xs btn-primary">
+                            <i class="fa fa-fw fa-download"></i>
+                        </a>
+                    </td>
+                    <td title="Отфильтровать по тексту">
+                        <a (click)="doSeach2('text', att.fileName)" class="btn-cell">
+                            {{att.fileName}}
+                        </a>
+                    </td>
+                    <td>
+                        <div class="form-inline">{{att.total}}&nbsp;<i class="{{att.total && (!att.currency || att.currency == 643) ? 'fa fa-rub' : ''}}" aria-hidden="true"  title="Рубли"></i></div>
+                    </td>
+                    <td title="Отфильтровать по комплекту" class="text-center">
+                        <a (click)="doSeach2('messageId',att.messageId)" class="btn btn-cell">
+                            <spam class="text-info">{{att.subDocCount}} <i class="text-center fa fa-{{att.subDocCount == 1 ? 'file' : 'files'}}-o"></i></spam>
+                        </a>
+                    </td>
+                    <td><spam *ngIf="getStatus(att.documentType, att.status, att.documentStatus, att.revocationStatus) == 'Требуется подпись'"><i class="fa fa-circle text-warning" aria-hidden="true"></i>&nbsp;</spam></td>
+                    <td>
+                        {{getStatus(att.documentType, att.status, att.documentStatus, att.revocationStatus)}}
+                    </td>
+                    <td style="max-width:150px;min-width:150px;width:150px;" title="{{att.creationTimestamp}}">
+                        <strong>{{i != 0 && att.messageId == responceModel.List[i-1].messageId ? '' : att.creationTimestamp}}</strong>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot *ngIf="responceModel.TotalRowCount > pageSize">
+                <tr>
+                    <td colspan="12">
+                        <paging [countPage]="countPage" [currentPage]="responceModel.CurrentPage" [countButton]="countButton" (onChangePage)="selectPage($event)"></paging>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
