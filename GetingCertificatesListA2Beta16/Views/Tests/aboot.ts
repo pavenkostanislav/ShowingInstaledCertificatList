@@ -7,8 +7,7 @@ import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig} from "angular2/router"
 import "rxjs/Rx";
 
 import { DiadocService } from "shared/Services/diadoc.service";
-import { CertsService } from 'shared/Services/certs.service'
-import { CryptoProPlugin } from "shared/Plugins/cryptopro";
+import { CryptoProPlugin } from "shared/Plugins/cryptopro.plugin";
 window["CryptoProPlugin"] = CryptoProPlugin;
 
 import { DefaultComponent } from "./default";
@@ -27,5 +26,4 @@ enableProdMode();
 bootstrap(AppComponent, [   HTTP_PROVIDERS
     , ROUTER_PROVIDERS
     , CryptoProPlugin
-    , CertsService
     , DiadocService]);
